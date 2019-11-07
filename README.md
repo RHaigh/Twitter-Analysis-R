@@ -6,16 +6,16 @@ Date of initial upload - 7/11/2019
 
 Environment - RStudio v1.2.1335
 
-Packages
-dplyr v0.8.3
-tidytext v0.2.2
-rtweet v0.6.9
-tidyverse v1.2.1
-qdapRegex v0.7.2
-plotly v4.9.0
-tm v0.7-6
-DT v0.9
-syuzhet v1.0.4
+Packages:
+dplyr v0.8.3,
+tidytext v0.2.2,
+rtweet v0.6.9,
+tidyverse v1.2.1,
+qdapRegex v0.7.2,
+plotly v4.9.0,
+tm v0.7-6,
+DT v0.9,
+syuzhet v1.0.4,
 orca v1.1-1
 
 An example of code demonstrating how to interact with the Twitter API to collect tweets with designated hashtags and then analyse this data for sentiment and location.

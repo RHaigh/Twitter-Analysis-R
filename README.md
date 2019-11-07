@@ -1,8 +1,11 @@
 # Twitter-Analysis-R
 
 Author - Richard Haigh & Alex Betts
+
 Date of initial upload - 7/11/2019
+
 Environment - RStudio v1.2.1335
+
 Packages
 dplyr v0.8.3
 tidytext v0.2.2

@@ -34,14 +34,14 @@ Sys.setenv(GOOGLE_API_KEY = "API key")
 # Download Tweets
 # Note this only goes back 6-9 days - longer history requires enterprise level API.
 
-# Enter in the filters you would like to search for. For this examples we will use #Brexit and related terms:
+# Enter in the filters you would like to search for. For this example we will use #Brexit and some related terms:
 tweets <- search_tweets(
   "#brexit OR #euexit OR #leave OR #remain -filter:retweets -filter:quote -filter:replies",
   n = 18000, include_rts = FALSE, type = "recent",
   retryonratelimit = TRUE
 )
 
-# Note that the twitter API allows a maximum collection of only 18000 tweets per day. 
+# Note that the twitter API allows a maximum collection of only 18000 tweets per day so plan your scrape accordingly. 
 
 tweetsDF <- tweets %>%
   select(created_at, text) %>%
@@ -67,4 +67,5 @@ tweets <- Corpus(VectorSource(text)) %>%
 
 tweets <- sort(rowSums(tweets), decreasing=TRUE)
 tweets <- data.frame(word = names(tweets), freq=tweets, row.names = NULL)
+
 

@@ -1,6 +1,6 @@
-# Twitter-Analysis-R
+# Twitter Analysis with R
 
-Author - Richard Haigh & Alex Betts
+Author - Richard Haigh SG & Alex Betts ONS
 
 Date of initial upload - 7/11/2019
 

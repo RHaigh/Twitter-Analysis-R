@@ -49,7 +49,7 @@ tweets <- search_tweets(
 # ================== DATA CLEAN  ==================
 # Grab useful columns only
 tweets <- tweets %>%
-  select(created_at, text, hashtags) %>%
+  select(created_at, text, hashtags, location) %>%
   arrange(desc(created_at))
 
 # Remove non utf characters (emjoys, escape characters, etc) from text strings
@@ -64,4 +64,4 @@ tweets$text = gsub("[ \t]{2,}", "", tweets$text)
 tweets$text = gsub("^\\s+|\\s+$", "", tweets$text)
 tweets$text <- iconv(tweets$text, "UTF-8", "ASCII", sub="")
 
-# Final output will be a 'tweets' dataframe with 3 columns that can be passed to further analysis scripts
+# Final output will be a 'tweets' dataframe with 4 columns that can be passed to further analysis scripts

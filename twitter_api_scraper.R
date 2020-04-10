@@ -35,37 +35,33 @@ Sys.setenv(GOOGLE_API_KEY = "API key")
 # Note this only goes back 6-9 days - longer history requires enterprise level API.
 
 # Enter in the filters you would like to search for. For this example we will use #Brexit and some related terms:
+# Collect your tweets
 tweets <- search_tweets(
-  "#brexit OR #euexit OR #leave OR #remain -filter:retweets -filter:quote -filter:replies",
-  n = 18000, include_rts = FALSE, type = "recent",
-  retryonratelimit = TRUE
-)
+  "schoolclosureuk OR coronavirus covid19uk -filter:retweets -filter:quote -filter:replies",
+  geocode = "57.47,-4.22,100km", 
+  n = 100, include_rts = FALSE, type = "recent", lang = "en", retryonratelimit = F)
 
-# Note that the twitter API allows a maximum collection of only 18000 tweets per day so plan your scrape accordingly. 
+# Optional arguments
+# n = number of tweets, 18000 per day MAX
+# lang = chosen language
+# geocode = chosen lat and long and radius to collect within
 
-tweetsDF <- tweets %>%
-  select(created_at, text) %>%
+# ================== DATA CLEAN  ==================
+# Grab useful columns only
+tweets <- tweets %>%
+  select(created_at, text, hashtags) %>%
   arrange(desc(created_at))
 
-text <- str_c(tweetsDF$text, collapse = "")
+# Remove non utf characters (emjoys, escape characters, etc) from text strings
+tweets$text = gsub("&amp", "", tweets$text)
+tweets$text = gsub("&amp", "", tweets$text)
+tweets$text = gsub("(RT|via)((?:\\b\\W*@\\w+)+)", "", tweets$text)
+tweets$text = gsub("@\\w+", "", tweets$text)
+tweets$text = gsub("[[:punct:]]", "", tweets$text)
+tweets$text = gsub("[[:digit:]]", "", tweets$text)
+tweets$text = gsub("http\\w+", "", tweets$text)
+tweets$text = gsub("[ \t]{2,}", "", tweets$text)
+tweets$text = gsub("^\\s+|\\s+$", "", tweets$text)
+tweets$text <- iconv(tweets$text, "UTF-8", "ASCII", sub="")
 
-# Clean up the text to remove unwanted characters / data:
-text <- text %>%
-  str_remove("\\n") %>%                   # remove linebreaks
-  rm_twitter_url() %>%                    # Remove URLS
-  rm_url() %>%
-  str_remove_all("#\\S+") %>%             # Remove any hashtags
-  str_remove_all("@\\S+") %>%             # Remove any @ mentions
-  removeWords(stopwords("english")) %>%   # Remove common words (a, the, it etc.)
-  removeNumbers() %>%
-  stripWhitespace() %>%
-  removeWords(c("amp"))                   # Final cleanup of other small changes
-
-tweets <- Corpus(VectorSource(text)) %>%
-  TermDocumentMatrix() %>%
-  as.matrix()
-
-tweets <- sort(rowSums(tweets), decreasing=TRUE)
-tweets <- data.frame(word = names(tweets), freq=tweets, row.names = NULL)
-
-
+# Final output will be a 'tweets' dataframe with 3 columns that can be passed to further analysis scripts

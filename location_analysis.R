@@ -1,17 +1,10 @@
-# Breakdown users tweeting about Brexit by unique locations
-users <- search_users("#brexit",
-                      n = 500) # Select your population sample
+# Ensure you have run twitter_api_scraper.R file before proceeding with this script
 
-length(unique(users$location))
+# List the number of unique locations you have gathered with your scrape
+length(unique(tweets$location))
 
-users %>%
-  ggplot(aes(location)) +
-  geom_bar() + coord_flip() +
-  labs(x = "Count",
-       y = "Location",
-       title = "Twitter Users - Unique Locations ")
-
-user_location_breakdown <- users %>%
+# Visual Analysis 1: Bar chart showing frequency of tweets within each unique location
+tweets %>%
   count(location, sort = TRUE) %>%
   mutate(location = reorder(location,n)) %>%
   na.omit() %>%

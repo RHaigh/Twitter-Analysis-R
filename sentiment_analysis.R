@@ -45,7 +45,7 @@ sent_analysis %>%
        x = NULL) +
   coord_flip()
 
-# Visual Analysis 2: Bar chart breaking down sentiment by individual emotions, rather than positive / negative
+# Visual Analysis 3: Bar chart breaking down sentiment by individual emotions, rather than positive / negative
 # Determine emotion for each tweet using NRC dictionary
 emotions <- get_nrc_sentiment(tweets$text)
 emo_bar = colSums(emotions)

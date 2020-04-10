@@ -18,3 +18,17 @@ tweets %>%
 
 # The final results will be a graph demonstrating the most common locations of individuals tweeting about your chosen hashtag
 # Note that the most common result will be blank. This represent accounts that do not disclose their location. 
+
+# Visual Analysis 2: Line chart showing frequency of tweets within specified date range
+tweets %>%
+  ts_plot("3 hours") + # Specify x-axis intervals
+  ggplot2::theme_minimal() +
+  ggplot2::theme(plot.title = ggplot2::element_text(face = "bold")) +
+  ggplot2::labs(
+    x = NULL, y = NULL,
+    title = "Frequency of #coronavirus Twitter",
+    subtitle = "Twitter status (tweet) counts aggregated using three-hour intervals",
+    caption = "\nSource: Data collected from Twitter's REST API via rtweet"
+  )
+
+# The advantages of this graph lie in being able to correlate spikes in social media activity with events

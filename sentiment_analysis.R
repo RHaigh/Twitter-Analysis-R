@@ -23,8 +23,28 @@ tweet_clean %>%
        y = "Unique words",
        title = "Count of unique words found in tweets")
 
+# Visual Analysis 2: Wordcloud representing most commonly used words
+# Requiring the wordcloud2 library, we can also take our word count and pass it to the wordcloud2() function
+wordcloud_data <- tweets %>%
+      dplyr::select(text) %>%
+      unnest_tokens(word, text) %>%
+      anti_join(stop_words) %>%
+      filter(!word %in% c("rt", "t.co")) %>%
+      count(word, sort = TRUE) %>%
+      top_n(100) %>%
+      mutate(word = reorder(word, n))
+
+wordcloud2(wordcloud_data, size = 2, minSize = 0, gridSize =  0,
+               fontFamily = 'Segoe UI', fontWeight = 'bold',
+               color = 'random-dark', backgroundColor = "white",
+               minRotation = -pi/4, maxRotation = pi/4, shuffle = TRUE,
+               rotateRatio = 0.4, shape = 'circle', ellipticity = 0.65,
+               widgetsize = NULL, figPath = NULL, hoverFunction = NULL)
+
+# Wordcloud2 allows you to alter the background color and even the shape of your wordcloud
+# A comprehensive guide on the functions within the package can be found at: https://www.r-graph-gallery.com/196-the-wordcloud2-library.html
  
-# Visual Analysis 2: Bar chart breaking down this word count by positive or negative sentiment
+# Visual Analysis 3: Bar chart breaking down this word count by positive or negative sentiment
 # Perform initial sentiment analysis using get_sentiment function of syuzhet package
 sent_analysis <- tweet_clean %>%
   inner_join(get_sentiments("bing")) %>% # bing refers to a particular sentiment analysis library
@@ -45,7 +65,7 @@ sent_analysis %>%
        x = NULL) +
   coord_flip()
 
-# Visual Analysis 3: Bar chart breaking down sentiment by individual emotions, rather than positive / negative
+# Visual Analysis 4: Bar chart breaking down sentiment by individual emotions, rather than positive / negative
 # Determine emotion for each tweet using NRC dictionary
 emotions <- get_nrc_sentiment(tweets$text)
 emo_bar = colSums(emotions)

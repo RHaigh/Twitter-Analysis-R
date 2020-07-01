@@ -18,7 +18,8 @@ plotly v4.9.0,
 tm v0.7-6,
 DT v0.9,
 syuzhet v1.0.4,
-orca v1.1-1
+orca v1.1-1,
+wordcloud2 0.2.0
 
 An example of code demonstrating how to interact with the Twitter API to collect tweets with designated hashtags and then analyse this data for sentiment and location.
 

@@ -44,6 +44,9 @@ wordcloud2(wordcloud_data, size = 2, minSize = 0, gridSize =  0,
 # Wordcloud2 allows you to alter the background color and even the shape of your wordcloud
 # A comprehensive guide on the functions within the package can be found at: https://www.r-graph-gallery.com/196-the-wordcloud2-library.html
  
+# WARNING a known issue with wordcloud package versions > 0.2.0 blocks plotly graphs from visualising on shiny apps if on the same page / tab as a wordcloud object
+# Downgrade to version 0.2.0 to avoid this problem
+ 
 # Visual Analysis 3: Bar chart breaking down this word count by positive or negative sentiment
 # Perform initial sentiment analysis using get_sentiment function of syuzhet package
 sent_analysis <- tweet_clean %>%

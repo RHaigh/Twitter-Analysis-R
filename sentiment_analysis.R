@@ -3,7 +3,7 @@
 # Load in stop words that break text analysis (.,/ etc)
 data("stop_words")
 
-# get a list of unique words within the text of all your tweets
+# Get a list of unique words within the text of all your tweets
 tweet_clean <- tweets %>%
   dplyr::select(text) %>%
   unnest_tokens(word, text) %>%

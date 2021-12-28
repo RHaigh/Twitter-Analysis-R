@@ -34,7 +34,7 @@ Sys.setenv(GOOGLE_API_KEY = "API key")
 # Download Tweets
 # Note this only goes back 6-9 days - longer history requires enterprise level API.
 
-# Enter in the filters you would like to search for. For this example we will use #Brexit and some related terms:
+# Enter in the filters you would like to search for. For this example we will use #coronavirus and some related terms:
 # Collect your tweets
 tweets <- search_tweets(
   "schoolclosureuk OR coronavirus covid19uk -filter:retweets -filter:quote -filter:replies",
@@ -47,7 +47,7 @@ tweets <- search_tweets(
 # geocode = chosen lat and long and radius to collect within
 
 # ================== DATA CLEAN  ==================
-# Grab useful columns only
+# Grab our most useful columns only
 tweets <- tweets %>%
   select(created_at, text, hashtags, location) %>%
   arrange(desc(created_at))
@@ -64,4 +64,4 @@ tweets$text = gsub("[ \t]{2,}", "", tweets$text)
 tweets$text = gsub("^\\s+|\\s+$", "", tweets$text)
 tweets$text <- iconv(tweets$text, "UTF-8", "ASCII", sub="")
 
-# Final output will be a 'tweets' dataframe with 4 columns that can be passed to further analysis scripts
+# Final output will be a 'tweets' dataframe with 4 columns that can be passed to further analysis tools
